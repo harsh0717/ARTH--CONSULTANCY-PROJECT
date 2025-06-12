@@ -8,7 +8,7 @@
                 if ($_SESSION['role'] == 'employee') {
                 ?>
                   <!-- employee nav bar -->
-                    <ul>
+                    <ul id="navList">
                         <li>
                             <a href="#">
                                 <i class="ri-computer-fill"></i>
@@ -16,19 +16,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="my_task.php">
                                 <i class="fa fa-tasks" aria-hidden="true"></i>
                                 <span>My TASK</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="profile.php">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="notification.php">
                                 <i class="fa fa-bell" aria-hidden="true"></i>
                                 <span>Notification</span>
                             </a>

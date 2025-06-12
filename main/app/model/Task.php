@@ -18,7 +18,7 @@ function get_all_tasks($conn){
 	return $tasks;
 }
 
-function delete_tasks($conn, $data){
+function delete_task($conn, $data){
 	$sql = "DELETE FROM tasks WHERE id=?";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute($data);
@@ -40,4 +40,16 @@ function update_task($conn, $data){
 	$sql = "UPDATE tasks SET title=?, description=?, assigned_to=? WHERE id=?";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute($data);
+}
+
+function get_all_tasks_by_id($conn,$id){
+    $sql = "SELECT * FROM tasks where assigned_to=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+
+	if($stmt->rowCount() > 0){
+		$tasks = $stmt->fetchAll();
+	}else $tasks = 0;
+
+	return $tasks;
 }

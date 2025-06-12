@@ -1,27 +1,29 @@
 <?php
 session_start();
-if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role']=="admin") {
+if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role']=="employee" ) {
     include "DB_connection.php";
+    include "app/model/Task.php";
     include "app/model/User.php";
 
     if (!isset($_GET['id'])) {
-        header("Location: user.php");
+        header("Location: tasks.php");
         exit(); 
     }
     $id = $_GET['id'];
-    $user = get_user_by_id($conn, $id);
+    $task = get_task_by_id($conn, $id);
 
-      if ($user == 0) {
-        header("Location: user.php");
+      if ($task == 0) {
+        header("Location: tasks.php");
         exit(); 
     }
+    $users = get_all_users($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
+    <title>Edit Task</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,8 +35,8 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role']=="ad
     <div class="body">
         <?php include"inc/nav.php"; ?> 
         <section class="section-1">
-           <h4 class="title">Edit User <a href="user.php">Users</a></h4>
-            <form class="form-1" method="post" action="app/update-user.php">
+           <h4 class="title">Edit Task <a href="my_task.php">Task</a></h4><br>
+            <form class="form-1" method="post" action="app/update-task-employee.php">
                 <?php if (isset($_GET['error'])) {?>
       	  	<div class="danger" role="alert">
 			  <?php echo stripcslashes($_GET['error']); ?>
@@ -46,18 +48,22 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role']=="ad
 			</div>
       	  <?php }?>
                 <div class="input-holder">
-                    <label>Full Name</label>
-                    <input type="text" name="full_name"  class="input-1" placeholder="Full Name" value="<?=$user["full_name"]?>"><br>
-                </div>
+                    <p><b>Title:</b><?=$task["title"]?></p>
+                </div><br>
                 <div class="input-holder">
-                    <label>User Name</label>
-                    <input type="text" name="user_name" value="<?=$user["username"]?>" class="input-1" placeholder="User Name"><br>
-                </div>
-                <div class="input-holder">
-                    <label>Password</label>
-                    <input type="text" name="password" value="**********" class="input-1" placeholder="Password"><br>
-                </div>
-                <input type="text" name="id" value="<?=$user["id"]?>" hidden>
+                    <p><b>Description:</b><?=$task["description"]?></p>
+                </div><br>
+            
+                 <div class="input-holder">
+                        <label>Status</label>
+                        <select name="assigned_to" class="input-1">
+                            <option <?php if( $task['status'] == "pending") echo"selected";?>>Pending</option>
+                            <option <?php if( $task['status'] == "in_progress") echo"selected";?>>In Progress</option>
+                            <option <?php if( $task['status'] == "compelete") echo"selected";?>>Completed</option>
+                        </select><br>
+                    </div>
+                
+                <input type="text" name="id" value="<?=$task["id"]?>" hidden>
 
                 <button class="edit-btn">Update</button>
             </form>
