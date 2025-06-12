@@ -1,3 +1,7 @@
+<?php
+session_start();
+if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,104 +19,21 @@
 
 <body>
     <input type="checkbox" id="checkbox">
-    <header class="header">
-        <h2 class="logo">TASK <b>FLOW</b>
-            <label for="checkbox">
-                <i id="navbtn" class="ri-menu-line"></i>
-            </label>
-        </h2>
-        <i class="ri-user-fill"></i>
-    </header>
+    <?php include"inc/header.php"; ?>
 
     <div class="body">
-
-        <nav class="side-bar">
-            <div class="user-photo">
-                <img src="user.png" alt="user-photo">
-                <h4>harsh</h4>
-            </div>
-            <div>
-                <?php
-                $user = "admin";
-
-                if ($user == 'employee') {
-                ?>
-                  <!-- employee nav bar -->
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="ri-computer-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-message-fill"></i>
-                                <span>My TASK</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-chat-1-line"></i>
-                                <span>Notification</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-information-line"></i>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-logout-box-line"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                <?php
-                } else { ?>
-                      <!-- admin nav bar -->
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="ri-computer-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-group-line"></i>
-                                <span>Manage Users</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                 <i class="ri-file-add-line"></i>
-                                <span>Create task</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-file-list-3-line"></i>
-                                <span>All Task</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ri-logout-box-line"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                <?php } ?>
-            </div>
-
-        </nav>
+        <?php include"inc/nav.php"; ?>
+        
         <section class="section-1">
            
         </section>
     </div>
 </body>
-
 </html>
+<?php } 
+else{
+    $em = "Login First";
+    header("Location: login.php?error=" . urlencode($em));
+    exit();
+}
+?>
