@@ -7,10 +7,10 @@
                 <?php
                 if ($_SESSION['role'] == 'employee') {
                 ?>
-                  <!-- employee nav bar -->
+                  <!-- employeee -->
                     <ul id="navList">
                         <li>
-                            <a href="#">
+                            <a href="index.php">
                                 <i class="ri-computer-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -28,12 +28,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="notification.php">
-                                <i class="fa fa-bell" aria-hidden="true"></i>
-                                <span>Notification</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="logout.php">
                                 <i class="ri-logout-box-line"></i>
                                 <span>Logout</span>
@@ -42,10 +36,10 @@
                     </ul>
                 <?php
                 } else { ?>
-                      <!-- admin nav bar -->
+                      <!-- admin -->
                     <ul id="navList">
                         <li>
-                            <a href="#">
+                            <a href="index.php">
                                 <i class="ri-computer-fill"></i>
                                 <span>Dashboard</span>
                             </a>

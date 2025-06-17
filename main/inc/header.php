@@ -1,8 +1,6 @@
 <header class="header">
-    <h2 class="logo">TASK <b>FLOW</b>
-        <label for="checkbox">
-            <i id="navbtn" class="ri-menu-line"></i>
-        </label>
-    </h2>
-    <i class="fa fa-bell"></i>
+    <label for="checkbox" class="header_menu">
+        <i id="navbtn" class="ri-menu-line"></i>
+    </label>
+        <h2 class="logo">TASK <b>FLOW</b></h2>
 </header>

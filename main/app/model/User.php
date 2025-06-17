@@ -32,11 +32,29 @@ function get_user_by_id($conn, $id){
 	$sql = "SELECT * FROM users WHERE id =? ";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([$id]);
-
+	
 	if($stmt->rowCount() > 0){
 		$user = $stmt->fetch();
 	}else $user = 0;
 
 	return $user;
+}
+function update_profile($conn, $data){
+	$sql = "UPDATE users SET full_name=?, dob=?, email=?, phone=?,address=?  WHERE id=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute($data);
+}
+function update_password($conn, $data){
+	$sql = "UPDATE users SET password=? WHERE id=?";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute($data);
+}
+
+function count_users($conn){
+	$sql = "SELECT id FROM users where role='employee'";
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([]);
+
+	return $stmt->rowCount();
 }
 ?>

@@ -6,7 +6,19 @@
 	<title>Login | Task Management System</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="login.css">
+	<style>
+		body{
+			background-image:
+    		linear-gradient(135deg, #23242b 0%, #127b8e 50%, #1f1f2b 100%),
+    		radial-gradient(circle at 20% 30%, rgba(18, 123, 142, 0.3), transparent 60%),
+    		radial-gradient(circle at 80% 70%, rgba(31, 31, 43, 0.3), transparent 60%);
+    		color: #333;
+		}
+		.login_form{
+		    color:beige;
+		    background-color: #2C3E50;
+		}
+	</style>
 </head>
 <body class="login_body">
       

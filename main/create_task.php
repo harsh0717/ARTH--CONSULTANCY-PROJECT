@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="admin") {
+if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role']=="admin") {
     include "DB_connection.php";
     include "app/model/User.php";
     $users = get_all_users($conn);
@@ -48,6 +48,10 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
                         <label>Description</label>
                         <textarea type="text" name="description" class="input-1" placeholder="Description"></textarea><br>
                     </div>
+                    <div class="input-holder">
+					    <lable>Due Date</lable>
+					    <input type="date" name="due_date" class="input-1" placeholder="Due Date"><br>
+				    </div>
                     <div class="input-holder">
                         <label>Assigned to</label>
                         <select name="assigned_to" class="input-1">

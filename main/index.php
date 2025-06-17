@@ -1,6 +1,28 @@
 <?php
 session_start();
 if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
+    include "DB_connection.php";
+    include "app/model/Task.php";
+    include "app/model/User.php";
+    if ($_SESSION['role']=="admin") {
+        $todaydue_task = count_tasks_due_today($conn);
+        $overdue_task = count_tasks_overdue($conn);
+        $no_deadline_task = count_tasks_NoDeadline($conn);
+        $num_task = count_tasks($conn);
+        $num_users = count_users($conn);
+        $pending = count_pending_tasks($conn);
+        $in_progress = count_in_progress_tasks($conn);
+        $completed = count_completed_tasks($conn);
+    }else {
+        $num_my_task = count_my_tasks($conn, $_SESSION['id']);
+        $overdue_task = count_my_tasks_overdue($conn,$_SESSION['id']);
+        $nodeadline_task = count_my_tasks_NoDeadline($conn, $_SESSION['id']);
+        $pending = count_my_pending_tasks($conn, $_SESSION['id']);
+	    $in_progress = count_my_in_progress_tasks($conn, $_SESSION['id']);
+	    $completed = count_my_completed_tasks($conn, $_SESSION['id']);
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,9 +45,72 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 
     <div class="body">
         <?php include"inc/nav.php"; ?>
-        
-        <section class="section-1">
-           
+        <section class="section-1 ">
+           <?php if ($_SESSION['role'] == "admin") { ?>
+                <div class="dashboard"> 
+                    <div class="dashboard-item">
+                        <i class="fa fa-users"></i>
+                        <span><?=$num_users?> Users</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-tasks"></i>
+                        <span><?=$num_task?> All task</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-window-close-o"></i>
+                        <span><?=$overdue_task?> Overdue</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-clock-o"></i>
+                        <span><?=$no_deadline_task?> No Deadline</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-tasks"></i>
+                        <span><?=$todaydue_task?> Due Today</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-bell"></i>
+                        <span><?=$num_task?> Notifications</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-hourglass-half"></i>
+                        <span><?=$pending?> Pending</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-spinner"></i>
+                        <span><?=$in_progress?> In progress</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-check-square"></i>
+                        <span><?=$completed?> Completed</span>
+                    </div>
+                </div>
+           <?php }else{ ?>
+                <div class="dashboard"> 
+                    <div class="dashboard-item">
+                        <i class="fa fa-tasks"></i>
+                        <span><?=$num_my_task?> My task</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-window-close-o"></i>
+                        <span><?=$overdue_task?> Overdue</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-clock-o"></i>
+                        <span><?=$nodeadline_task?> No Deadline</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-hourglass-half"></i>
+                        <span><?=$pending?> Pending</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-spinner"></i>
+                        <span><?=$in_progress?> In progress</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <i class="fa fa-check-square"></i>
+                        <span><?=$completed?> Completed</span>
+          <?php } ?>
         </section>
     </div>
      <script>

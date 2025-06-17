@@ -4,8 +4,28 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
     include "DB_connection.php";
     include "app/model/Task.php";
     include "app/model/User.php";
-    $tasks = get_all_tasks($conn);
-    $users =get_all_users($conn)
+    
+
+    $text = "All Task";
+    if (isset($_GET['due_date']) &&  $_GET['due_date'] == "Due Today") {
+        $text = "Due Today";
+        $tasks = get_all_tasks_due_today($conn);
+        $num_task = count_tasks_due_today($conn);
+    }elseif(isset($_GET['due_date']) &&  $_GET['due_date'] == "Overdue"){
+        $text = "Overdue";
+        $tasks = get_all_tasks_overdue($conn);
+        $num_task = count_tasks_overdue($conn);
+        
+    }elseif(isset($_GET['due_date']) &&  $_GET['due_date'] == "No Deadline"){
+        $text = "No Deadline";
+        $tasks = get_all_tasks_NoDeadline($conn);
+        $num_task = count_tasks_NoDeadline($conn);
+
+    }else{
+        $tasks = get_all_tasks($conn);
+        $num_task = count_tasks($conn);
+    }
+    $users =get_all_users($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +48,16 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
         <?php include"inc/nav.php"; ?>
         
         <section class="section-1">
-           <h4 class="title">All Tasks <a href="create_task.php">Create Tasks</a></h4>
+           <h4 class="title"> 
+                <a href="create_task.php" class="btn">Create Tasks</a>
+                <span>
+                    <a href="tasks.php">All task</a>
+                    <a href="tasks.php?due_date=Due Today">Due Today</a>
+                    <a href="tasks.php?due_date=Overdue">Overdue</a>
+                    <a href="tasks.php?due_date=No Deadline">No Deadline</a>
+                </span>
+           </h4><br>
+           <h4 class="title"><?=$text?> (<?=$num_task?>)</h4>
            <?php if (isset($_GET['success'])) {?>
       	  	<div class="success" role="alert">
 			  <?php echo stripcslashes($_GET['success']); ?>
@@ -41,6 +70,8 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
 				<th>Title</th>
 				<th>Description</th>
 				<th>Assigned To</th>
+                <th>Due Date</th>
+				<th>Status</th>
 				<th>Action</th>
             </tr>
             <?php 
@@ -58,6 +89,10 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
                         echo $user['full_name'];
                     }} ?>
                 </td>
+                <td><?php if($task['due_date'] == "") echo "No Deadline";
+	                      else echo $task['due_date'];
+	               ?></td>
+                <td><?=$task['status']?></td>
                 
                 <td>
                     <a href="edit-task.php?id=<?=$task['id']?>" class="edit-btn">Edit</a>
