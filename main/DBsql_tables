@@ -13,6 +13,6 @@ CREATE TABLE tasks (
  description text,
  assigned_to INT,
  status ENUM('pending','in_progress','compelete') DEFAULT 'pending',
- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
- foreign KEY (assigned_to) reference users(id)
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ foreign KEY (assigned_to) references users(id)
 );

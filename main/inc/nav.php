@@ -4,9 +4,7 @@
                 <h4>@<?=$_SESSION['username']?></h4>
             </div>
             <div>
-                <?php
-                if ($_SESSION['role'] == 'employee') {
-                ?>
+                <?php if ($_SESSION['role'] == 'employee') {?>
                   <!-- employeee -->
                     <ul id="navList">
                         <li>
@@ -34,8 +32,7 @@
                             </a>
                         </li>
                     </ul>
-                <?php
-                } else { ?>
+                <?php } else { ?>
                       <!-- admin -->
                     <ul id="navList">
                         <li>

@@ -21,15 +21,15 @@ if (isset($_POST["user_name"]) && isset($_POST["password"]) && isset($_POST["ful
     $full_name = validate_input($_POST["full_name"]);
 
     if (empty($full_name)) {
-        $em = "User name is required";
+        $em = "Full Name  is required";
         header("Location: ../add-user.php?error=" . urlencode($em));
         exit();
     } elseif (empty($user_name)) {
-        $em = "Password is required";
+        $em = " User name  is required";
         header("Location: ../add-user.php?error=" . urlencode($em));
         exit();
     }elseif (empty($password)) {
-        $em = "Full Name is required";
+        $em = "Password is required";
         header("Location: ../add-user.php?error=" . urlencode($em));
         exit();
     } else {

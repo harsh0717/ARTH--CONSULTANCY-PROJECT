@@ -89,9 +89,11 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])&& $_SESSION['role']=="adm
                         echo $user['full_name'];
                     }} ?>
                 </td>
-                <td><?php if($task['due_date'] == "") echo "No Deadline";
+                <td>
+                    <?php if($task['due_date'] == "") echo "No Deadline";
 	                      else echo $task['due_date'];
-	               ?></td>
+	               ?>
+                </td>
                 <td><?=$task['status']?></td>
                 
                 <td>

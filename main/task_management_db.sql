@@ -35,7 +35,7 @@ CREATE TABLE `tasks` (
   `due_date` date DEFAULT NULL,
   `status` enum('pending','in_progress','completed') DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tasks`
@@ -52,14 +52,6 @@ INSERT INTO `tasks` (`id`, `title`, `description`, `assigned_to`, `due_date`, `s
 --
 -- Triggers `tasks`
 --
-DELIMITER $$
-CREATE TRIGGER `before_insert_tasks` BEFORE INSERT ON `tasks` FOR EACH ROW BEGIN
-  IF NEW.due_date IS NULL THEN
-    SET NEW.due_date = CURDATE();
-  END IF;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -76,9 +68,9 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `dob` date DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 DEFAULT NULL,
   `address` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 
 
 --
 -- Dumping data for table `users`
