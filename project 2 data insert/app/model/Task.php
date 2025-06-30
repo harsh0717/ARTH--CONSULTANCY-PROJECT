@@ -235,3 +235,18 @@ function count_my_completed_tasks($conn, $id)
 
 	return $stmt->rowCount();
 }
+
+function get_tasks_by_user($conn, $user_id) {
+    $sql = "SELECT * FROM tasks WHERE assigned_to = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$user_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function count_tasks_by_user($conn, $user_id) {
+    $sql = "SELECT COUNT(*) as total FROM tasks WHERE assigned_to = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$user_id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['total'];
+}

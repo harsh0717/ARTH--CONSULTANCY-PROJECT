@@ -1,147 +1,151 @@
 <?php
 session_start();
-if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "admin") {
-    include "DB_connection.php";
-    include "app/model/User.php";
-    $users = get_all_users($conn);
+if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
+  include "DB_connection.php";
+  include "app/model/Task.php";
+  include "app/model/User.php";
+  $tasks = get_all_tasks_by_id($conn, $_SESSION['id']);
+  $text = "All Task";
+  $num_task = count_tasks($conn);
+
 ?>
-    <!doctype html>
-    <html lang="en">
-    <!--begin::Head-->
+  <!doctype html>
+  <html lang="en">
+  <!--begin::Head-->
 
-    <head>
-        <!-- inside <head> -->
-        <link rel="icon" href="logo.png" type="image/png" sizes="32x32" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Task Flow | Manage Users</title>
-        <!--begin::Primary Meta Tags-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="title" content="AdminLTE v4 | Dashboard" />
-        <meta name="author" content="ColorlibHQ" />
-        <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
-        <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
-        <!--end::Primary Meta Tags-->
-        <!--begin::Fonts-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
-        <!--end::Fonts-->
-        <!--begin::Third Party Plugin(OverlayScrollbars)-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
-        <!--end::Third Party Plugin(OverlayScrollbars)-->
-        <!--begin::Third Party Plugin(Bootstrap Icons)-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
-        <!--end::Third Party Plugin(Bootstrap Icons)-->
-        <!--begin::Required Plugin(AdminLTE)-->
-        <link rel="stylesheet" href="css/adminlte.css" />
-        <!--end::Required Plugin(AdminLTE)-->
-        <!-- apexcharts -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
-        <!-- jsvectormap -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
-    </head>
-    <!--end::Head-->
-    <!--begin::Body-->
+  <head>
+    <!-- inside <head> -->
+    <link rel="icon" href="logo.png" type="image/png" sizes="32x32" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Task Flow | My Task</title>
+    <!--begin::Primary Meta Tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="AdminLTE v4 | Dashboard" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
+    <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
+    <!--end::Primary Meta Tags-->
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+    <!--end::Fonts-->
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="css/adminlte.css" />
+    <!--end::Required Plugin(AdminLTE)-->
+    <!-- apexcharts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+    <!-- jsvectormap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+  </head>
+  <!--end::Head-->
+  <!--begin::Body-->
 
-    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-        <!--begin::App Wrapper-->
-        <div class="app-wrapper">
-            <!--begin::Header-->
-            <?php include "inc/nav.php"; ?>
-            <!--end::Header-->
-            <!--begin::Sidebar-->
-            <?php include "inc/slider.php"; ?>
-            <!--end::Sidebar-->
-            <!--begin::App Main-->
-            <main class="app-main">
-                <!--begin::App Content Header-->
-                <div class="app-content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6" style="display: flex;">
-                                <h3 class="mb-0">Manage Users</h3>&nbsp;&nbsp;&nbsp;<a href="add-user.php" class="btn btn-secondary">Add User</a>
-                            </div>
-                            <?php if (isset($_GET['success'])) : ?>
-                                <div id="successAlert" class="alert alert-success" role="alert">
-                                    <?php echo stripcslashes($_GET['success']); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <!--end::App Content Header-->
-                <!--begin::App Content-->
-                <div class="card mb-4">
-                    <div class="card-body p-0">
-                        <?php if ($users != 0) { ?>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th style="width: 10px">#</th>
-                                        <th style="width:300px">Full Name</th>
-                                        <th style="width: 50px">Username</th>
-                                        <th style="width: 40px">role</th>
-                                        <th style="width: 40px">Action</th>
-                                    </tr>
-                                </thead>
-                                <?php
-                                $i = 0;
-                                foreach ($users as $user) { ?>
-                                    <tbody>
-                                        <tr class="align-middle">
-                                            <td><?= ++$i ?></td>
-                                            <td><?= $user['full_name'] ?></td>
-                                            <td><?= $user['username'] ?></td>
-                                            <td><?= $user['role'] ?></td>
-                                            <td>
-                                                <span class="badge update-btn">
-                                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="text-decoration-none btn btn-success">Edit</a>&nbsp;&nbsp;&nbsp;
-                                                    <a href="delete-user.php?id=<?= $user['id'] ?>" class="text-decoration-none btn btn-danger delete-link">Delete</a>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                <?php  } ?>
-                            </table>
-                        <?php } else { ?>
-                            <h3>Empty</h3>
-                        <?php } ?>
-                    </div>
-                </div>
-                <!--end::App Content-->
-            </main>
-            <!--end::App Main-->
-            <!--begin::Footer-->
-            <footer class="app-footer">
-                <div class="float-end d-none d-sm-inline">Anything you want</div>
-                <strong>
-                    Copyright &copy; 2025&nbsp;
-                    <a href="index.php" class="text-decoration-none">TASK FLOW</a>.
-                </strong>
-                All rights reserved.
-            </footer>
-            <!--end::Footer-->
-        </div>
-        <!--end::App Wrapper-->
-
-        <!-- ========= Delete Confirmation Modal (no class changes) ========= -->
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirm delete</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">Are you sure you want to delete this user?</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <a id="deleteConfirmBtn" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+      <!--begin::Header-->
+      <?php include "inc/nav.php"; ?>
+      <!--end::Header-->
+      <!--begin::Sidebar-->
+      <?php include "inc/slider.php"; ?>
+      <!--end::Sidebar-->
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row" style="display: flex;">
+              <div class="col-sm-6" style="display: flex;">
+                <h3 class="mb-0">My Task</h3>
+              </div>
             </div>
+          </div>
         </div>
-        <!-- ============================================================= -->
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
 
-        <!--begin::Script-->
-        <script
+        <?php if (isset($_GET['success'])) { ?>
+          <div id="successAlert" class="alert alert-success" role="alert">
+            <?php echo stripcslashes($_GET['success']); ?>
+          </div>
+        <?php } ?>
+        <div class="card mb-4">
+          <div class="card-body p-0">
+            <?php if ($tasks != 0) { ?>
+              <table class="table table-striped">
+                <thead>
+                  <tr class="align-middle">
+                    <th style="width: 10px">#</th>
+                    <th style="width: 150px">Title</th>
+                    <th style="width: 150px">Description</th>
+                    <th style="width: 30px">Status</th>
+                    <th style="width: 30px">Due Date</th>
+                    <th style="width: 30px">Action</th>
+                  </tr>
+                </thead>
+                <?php
+                $i = 0;
+                foreach ($tasks as $task) { ?>
+                  <tbody>
+                    <tr>
+                      <td><?= ++$i ?></td>
+                      <td><?= $task['title'] ?></td>
+                      <td><?= $task['description'] ?></td>
+                      <td><?= $task['status'] ?></td>
+                      <td><?php if ($task['due_date'] == "") echo "No Deadline";
+                          else echo $task['due_date'];
+                          ?></td>
+                      <td>
+                        <a href="edit-task-employee.php?id=<?= $task['id'] ?>" class="btn btn-primary">Edit</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                <?php  } ?>
+              </table>
+            <?php } else { ?>
+              <h3>Empty</h3>
+            <?php } ?>
+          </div>
+        </div>
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+      <!--begin::Footer-->
+      <footer class="app-footer">
+        <div class="float-end d-none d-sm-inline">Anything you want</div>
+        <strong>
+          Copyright &copy; 2025&nbsp;
+          <a href="index.php" class="text-decoration-none">TASK FLOW</a>.
+        </strong>
+        All rights reserved.
+      </footer>
+      <!--end::Footer-->
+    </div>
+    <!--end::App Wrapper-->
+    <!-- ========= Delete Confirmation Modal (no class changes) ========= -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">Are you sure you want to delete this user?</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a id="deleteConfirmBtn" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================= -->
+    <!--begin::Script-->
+    <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
       integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ="
       crossorigin="anonymous"></script>
@@ -194,7 +198,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
           handle: '.card-header',
         });
       });
-
       const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
       cardHeaders.forEach((cardHeader) => {
         cardHeader.style.cursor = 'move';
@@ -210,7 +213,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
       // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
       // IT'S ALL JUST JUNK FOR DEMO
       // ++++++++++++++++++++++++++++++++++++++++++
-
       const sales_chart_options = {
         series: [{
             name: 'Digital Goods',
@@ -256,7 +258,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
           },
         },
       };
-
       const sales_chart = new ApexCharts(
         document.querySelector('#revenue-chart'),
         sales_chart_options,
@@ -287,13 +288,11 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
         GB: 320, // Great Britain
         RU: 3000, // Russia
       };
-
       // World map by jsVectorMap
       const map = new jsVectorMap({
         selector: '#world-map',
         map: 'world',
       });
-
       // Sparkline charts
       const option_sparkline1 = {
         series: [{
@@ -317,10 +316,8 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
         },
         colors: ['#DCE6EC'],
       };
-
       const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
       sparkline1.render();
-
       const option_sparkline2 = {
         series: [{
           data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
@@ -343,10 +340,8 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
         },
         colors: ['#DCE6EC'],
       };
-
       const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
       sparkline2.render();
-
       const option_sparkline3 = {
         series: [{
           data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
@@ -369,21 +364,18 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
         },
         colors: ['#DCE6EC'],
       };
-
       const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
       sparkline3.render();
     </script>
     <script>
       (() => {
         const storedTheme = localStorage.getItem('theme');
-
         const getPreferredTheme = () => {
           if (storedTheme) {
             return storedTheme;
           }
           return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         };
-
         const setTheme = function(theme) {
           if (theme === 'auto') {
             document.documentElement.removeAttribute('data-bs-theme');
@@ -391,16 +383,13 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
             document.documentElement.setAttribute('data-bs-theme', theme);
           }
         };
-
         setTheme(getPreferredTheme());
-
         window.addEventListener('DOMContentLoaded', () => {
           document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
             toggle.addEventListener('click', () => {
               const theme = toggle.getAttribute('data-bs-theme-value');
               localStorage.setItem('theme', theme);
               setTheme(theme);
-
               document.querySelectorAll('[data-bs-theme-value]').forEach(el =>
                 el.classList.remove('active')
               );
@@ -412,7 +401,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
     <!--end::Script-->
   </body>
   <!--end::Body-->

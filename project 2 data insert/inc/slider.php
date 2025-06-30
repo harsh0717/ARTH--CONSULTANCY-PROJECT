@@ -38,12 +38,22 @@
                 </li>
                 <li class="nav-item menu-open">
                   <p>
+                    <a href="add-user.php" class="nav-link active"><i class="nav-icon bi bi-person-circle"></i>Add Users</a>
+                  </p>
+                </li>
+                <li class="nav-item menu-open">
+                  <p>
                     <a href="create_task.php" class="nav-link active"><i class="nav-icon bi bi-file-earmark-plus"></i></i>Create Task</a>
                   </p>
                 </li>
                 <li class="nav-item menu-open">
                   <p>
                     <a href="tasks.php" class="nav-link active"><i class="nav-icon bi bi-file-text"></i>All Task</a>
+                  </p>
+                </li>
+                <li class="nav-item menu-open">
+                  <p>
+                    <a href="user_detail.php" class="nav-link active"><i class="nav-icon bi bi-person"></i>User Details</a>
                   </p>
                 </li>
                 <li class="nav-item">
@@ -66,12 +76,22 @@
                 </li>
                 <li class="nav-item menu-open">
                   <p>
-                    <a href="index.php" class="nav-link active"><i class="nav-icon bi bi-card-checklist"></i>MY TASK</a>
+                    <a href="my_task.php" class="nav-link active"><i class="nav-icon bi bi-card-checklist"></i>MY TASK</a>
                   </p>
                 </li>
                 <li class="nav-item menu-open">
                   <p>
-                    <a href="index.php" class="nav-link active"><i class="nav-icon bi bi-person"></i></i>PROFILE</a>
+                    <a href="profile.php" class="nav-link active"><i class="nav-icon bi bi-person"></i></i>PROFILE</a>
+                  </p>
+                </li>
+                <li class="nav-item menu-open">
+                  <p>
+                    <a href="edit_profile.php" class="nav-link active"><i class="nav-icon bi bi-pencil-square"></i></i>Edit Profile</a>
+                  </p>
+                </li>
+                <li class="nav-item menu-open">
+                  <p>
+                    <a href="change_password.php" class="nav-link active"><i class="nav-icon bi bi-shield-lock"></i></i>Change password</a>
                   </p>
                 </li>
                 <li class="nav-item menu-open">

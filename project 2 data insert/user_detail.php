@@ -13,7 +13,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
         <!-- inside <head> -->
         <link rel="icon" href="logo.png" type="image/png" sizes="32x32" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Task Flow | Manage Users</title>
+        <title>Task Flow | Users Details</title>
         <!--begin::Primary Meta Tags-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="title" content="AdminLTE v4 | Dashboard" />
@@ -57,7 +57,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6" style="display: flex;">
-                                <h3 class="mb-0">Manage Users</h3>&nbsp;&nbsp;&nbsp;<a href="add-user.php" class="btn btn-secondary">Add User</a>
+                                <h3 class="mb-0">Users Details</h3>
                             </div>
                             <?php if (isset($_GET['success'])) : ?>
                                 <div id="successAlert" class="alert alert-success" role="alert">
@@ -75,11 +75,15 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                             <table class="table table-striped">
                                 <thead>
                                     <tr class="align-middle">
-                                        <th style="width: 10px">#</th>
-                                        <th style="width:300px">Full Name</th>
-                                        <th style="width: 50px">Username</th>
-                                        <th style="width: 40px">role</th>
-                                        <th style="width: 40px">Action</th>
+                                        <th>#</th>
+                                        <th>Full Name</th>
+                                        <th>Employee ID</th>
+                                        <th>User Name</th>
+                                        <th>Joined AT</th>
+                                        <th>DOB</th>
+                                        <th>Email</th>
+                                        <th>Phone no</th>
+                                        <th>Address</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -89,14 +93,14 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "
                                         <tr class="align-middle">
                                             <td><?= ++$i ?></td>
                                             <td><?= $user['full_name'] ?></td>
+                                            <td><?= $user['id'] ?></td>
                                             <td><?= $user['username'] ?></td>
-                                            <td><?= $user['role'] ?></td>
-                                            <td>
-                                                <span class="badge update-btn">
-                                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="text-decoration-none btn btn-success">Edit</a>&nbsp;&nbsp;&nbsp;
-                                                    <a href="delete-user.php?id=<?= $user['id'] ?>" class="text-decoration-none btn btn-danger delete-link">Delete</a>
-                                                </span>
-                                            </td>
+                                            <td><?= $user['created_at'] ?></td>
+                                            <td><?= $user['dob'] ?></td>
+                                            <td><?= $user['email'] ?></td>
+                                            <td><?= $user['phone'] ?></td>
+                                            <td><?= $user['address'] ?></td>
+                                            
                                         </tr>
                                     </tbody>
                                 <?php  } ?>
